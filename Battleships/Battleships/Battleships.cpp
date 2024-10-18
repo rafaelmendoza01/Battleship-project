@@ -119,34 +119,57 @@ int main()
 
         while (Turn == 1) {
             cout << "\n Enemy turn to attack... ";
-
-            CurrentAttackingMethod.DirAndValid.insert(make_pair('L', true));
-            CurrentAttackingMethod.DirAndValid.insert(make_pair('R', true));
-            CurrentAttackingMethod.DirAndValid.insert(make_pair('U', true));
-            CurrentAttackingMethod.DirAndValid.insert(make_pair('D', true));
-            ComputerPlaceForAttack.push_back(CurrentAttackingMethod);
             do {
                 srand(time(0));
                 AttackingCoordinate.Row = rand() % 9;
                 Waiting();
-                srand(time(0)); 
+                srand(time(0));
                 AttackingCoordinate.Col = rand() % 9;
             } while (BoardOfPlayer[AttackingCoordinate.Row][AttackingCoordinate.Col] == 'n');
 
-            if (BoardOfPlayer[AttackingCoordinate.Row][AttackingCoordinate.Col] == '.') {
-                BoardOfPlayer[AttackingCoordinate.Row][AttackingCoordinate.Col] = 'n';
-                Turn = 0;
-            }
-            else {
-                if (AttackingCoordinate.Row == 8 && AttackingCoordinate.Col == 8) {
-                    ComputerPlaceForAttack[0].DirAndValid[2] = false;
-                    ComputerPlaceForAttack[0].DirAndValid[4] = false;
-                }
-                else if (AttackingCoordinate.Row == 0 && AttackingCoordinate.Col == 0) {
-                    ComputerPlaceForAttack[0].DirAndValid[2] = false;
-                    ComputerPlaceForAttack[0].DirAndValid[4] = false;
-                }
+            if (ComputerPlaceForAttack.size() == 0) {
 
+                CurrentAttackingMethod.DirAndValid.insert(make_pair('L', true));
+                CurrentAttackingMethod.DirAndValid.insert(make_pair('R', true));
+                CurrentAttackingMethod.DirAndValid.insert(make_pair('U', true));
+                CurrentAttackingMethod.DirAndValid.insert(make_pair('D', true));
+                ComputerPlaceForAttack.push_back(CurrentAttackingMethod);
+                
+                if (BoardOfPlayer[AttackingCoordinate.Row][AttackingCoordinate.Col] == '.') {
+                    BoardOfPlayer[AttackingCoordinate.Row][AttackingCoordinate.Col] = 'n';
+                    Turn = 0;
+                }
+                else {
+                    if (AttackingCoordinate.Row == 8 && AttackingCoordinate.Col == 8) {
+                        ComputerPlaceForAttack[0].DirAndValid[2] = false;
+                        ComputerPlaceForAttack[0].DirAndValid[4] = false;
+                    }
+                    else if (AttackingCoordinate.Row == 0 && AttackingCoordinate.Col == 0) {
+                        ComputerPlaceForAttack[0].DirAndValid[1] = false;
+                        ComputerPlaceForAttack[0].DirAndValid[3] = false;
+                    }
+                    else if (AttackingCoordinate.Row == 0 && AttackingCoordinate.Col == 8) {
+                        ComputerPlaceForAttack[0].DirAndValid[2] = false;
+                        ComputerPlaceForAttack[0].DirAndValid[3] = false;
+                    }
+                    else if (AttackingCoordinate.Row == 8 && AttackingCoordinate.Col == 0) {
+                        ComputerPlaceForAttack[0].DirAndValid[1] = false;
+                        ComputerPlaceForAttack[0].DirAndValid[4] = false;
+                    }
+                    else if (AttackingCoordinate.Row == 0) {
+                        ComputerPlaceForAttack[0].DirAndValid[3] = false;
+                    }
+                    else if (AttackingCoordinate.Row == 8) {
+                        ComputerPlaceForAttack[0].DirAndValid[4] = false;
+                    }
+                    else if (AttackingCoordinate.Col == 0) {
+                        ComputerPlaceForAttack[0].DirAndValid[1] = false;
+                    }
+                    else if (AttackingCoordinate.Col == 0) {
+                        ComputerPlaceForAttack[0].DirAndValid[2] = false;
+                    }
+
+                }
             }
 
 
