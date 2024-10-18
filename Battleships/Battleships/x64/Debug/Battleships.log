@@ -1,0 +1,14 @@
+﻿  Battleships.cpp
+C:\Users\rafan\Desktop\CodingProjects\Battleships\Battleships\Battleships.cpp(204,31): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\rafan\Desktop\CodingProjects\Battleships\Battleships\Battleships.cpp(208,31): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\rafan\Desktop\CodingProjects\Battleships\Battleships\Battleships.cpp(216,35): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\rafan\Desktop\CodingProjects\Battleships\Battleships\Battleships.cpp(219,35): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\rafan\Desktop\CodingProjects\Battleships\Battleships\Battleships.cpp(229,35): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\rafan\Desktop\CodingProjects\Battleships\Battleships\Battleships.cpp(232,35): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\rafan\Desktop\CodingProjects\Battleships\Battleships\Battleships.cpp(241,35): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\rafan\Desktop\CodingProjects\Battleships\Battleships\Battleships.cpp(244,35): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\rafan\Desktop\CodingProjects\Battleships\Battleships\Battleships.cpp(253,35): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\rafan\Desktop\CodingProjects\Battleships\Battleships\Battleships.cpp(256,35): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\rafan\Desktop\CodingProjects\Battleships\Battleships\Battleships.cpp(313,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\rafan\Desktop\CodingProjects\Battleships\Battleships\Battleships.cpp(326,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Battleships.vcxproj -> C:\Users\rafan\Desktop\CodingProjects\Battleships\x64\Debug\Battleships.exe
