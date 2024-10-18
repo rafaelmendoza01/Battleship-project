@@ -142,6 +142,10 @@ int main()
                     ComputerPlaceForAttack[0].DirAndValid[2] = false;
                     ComputerPlaceForAttack[0].DirAndValid[4] = false;
                 }
+                else if (AttackingCoordinate.Row == 0 && AttackingCoordinate.Col == 0) {
+                    ComputerPlaceForAttack[0].DirAndValid[2] = false;
+                    ComputerPlaceForAttack[0].DirAndValid[4] = false;
+                }
 
             }
 
