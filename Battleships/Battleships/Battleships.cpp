@@ -32,6 +32,9 @@ struct CoordinateAndDirection {
 // 2 = up
 // 3 = down.
 
+
+//this vector will only contain 2 coordinates at most, the end coordinates of boat.
+//Everytime a new end coordinate is found, it replaces the coordinate in the second position.
 vector<CoordinateAndDirection> LastCoordinatesOfAttack;
 
 
@@ -125,84 +128,17 @@ int main()
                 Waiting();
                 srand(time(0));
                 AttackingCoordinate.Col = rand() % 9;
-            } while (BoardOfPlayer[AttackingCoordinate.Row][AttackingCoordinate.Col] == 'n');
+            } while (BoardOfPlayer[AttackingCoordinate.Row][AttackingCoordinate.Col] == 'n'
+                || BoardOfPlayer[AttackingCoordinate.Row][AttackingCoordinate.Col] == 'X');
 
-            if (LastCoordinatesOfAttack.size() == 0) {
-
-                CurrentAttackingMethod.DirAndValid.insert(make_pair('L', true));
-                CurrentAttackingMethod.DirAndValid.insert(make_pair('R', true));
-                CurrentAttackingMethod.DirAndValid.insert(make_pair('U', true));
-                CurrentAttackingMethod.DirAndValid.insert(make_pair('D', true));
-                LastCoordinatesOfAttack.push_back(CurrentAttackingMethod);
-                
-                if (BoardOfPlayer[AttackingCoordinate.Row][AttackingCoordinate.Col] == '.') {
-                    BoardOfPlayer[AttackingCoordinate.Row][AttackingCoordinate.Col] = 'n';
-                    cout << "\nEnemy has failed to hit, your turn ";
-                    PrintBoard(BoardOfPlayer, Turn);
-                    Turn = 0;
-                }
-                else {
-
-                    //if on the edge of the board, immediately decide what directions to not shoot at
-                    if (AttackingCoordinate.Row == 8 && AttackingCoordinate.Col == 8) {
-                        LastCoordinatesOfAttack[0].DirAndValid[2] = false;
-                        LastCoordinatesOfAttack[0].DirAndValid[4] = false;
-                    }
-                    else if (AttackingCoordinate.Row == 0 && AttackingCoordinate.Col == 0) {
-                        LastCoordinatesOfAttack[0].DirAndValid[1] = false;
-                        LastCoordinatesOfAttack[0].DirAndValid[3] = false;
-                    }
-                    else if (AttackingCoordinate.Row == 0 && AttackingCoordinate.Col == 8) {
-                        LastCoordinatesOfAttack[0].DirAndValid[2] = false;
-                        LastCoordinatesOfAttack[0].DirAndValid[3] = false;
-                    }
-                    else if (AttackingCoordinate.Row == 8 && AttackingCoordinate.Col == 0) {
-                        LastCoordinatesOfAttack[0].DirAndValid[1] = false;
-                        LastCoordinatesOfAttack[0].DirAndValid[4] = false;
-                    }
-                    else if (AttackingCoordinate.Row == 0) {
-                        LastCoordinatesOfAttack[0].DirAndValid[3] = false;
-                    }
-                    else if (AttackingCoordinate.Row == 8) {
-                        LastCoordinatesOfAttack[0].DirAndValid[4] = false;
-                    }
-                    else if (AttackingCoordinate.Col == 0) {
-                        LastCoordinatesOfAttack[0].DirAndValid[1] = false;
-                    }
-                    else if (AttackingCoordinate.Col == 0) {
-                        LastCoordinatesOfAttack[0].DirAndValid[2] = false;
-                    }
-
-                    //also check if theres no n or ! next to each Attacking coordinate.
-                    for (int i = 0;i < 4; i++) {
-                        if (BoardOfPlayer[LastCoordinatesOfAttack[0].Coor.Row + 1][LastCoordinatesOfAttack[0].Coor.Col] == 'n' ||
-                            BoardOfPlayer[LastCoordinatesOfAttack[0].Coor.Row + 1][LastCoordinatesOfAttack[0].Coor.Col] == '!') {
-                            LastCoordinatesOfAttack[0].DirAndValid[4] = false;
-                        } else if (BoardOfPlayer[LastCoordinatesOfAttack[0].Coor.Row - 1][LastCoordinatesOfAttack[0].Coor.Col] == 'n' ||
-                            BoardOfPlayer[LastCoordinatesOfAttack[0].Coor.Row - 1][LastCoordinatesOfAttack[0].Coor.Col] == '!') {
-                            LastCoordinatesOfAttack[0].DirAndValid[3] = false;
-                        }
-                        else if (BoardOfPlayer[LastCoordinatesOfAttack[0].Coor.Row][LastCoordinatesOfAttack[0].Coor.Col + 1] == 'n' ||
-                            BoardOfPlayer[LastCoordinatesOfAttack[0].Coor.Row][LastCoordinatesOfAttack[0].Coor.Col + 1] == '!') {
-                            LastCoordinatesOfAttack[0].DirAndValid[2] = false;
-                        }
-                        else if (BoardOfPlayer[LastCoordinatesOfAttack[0].Coor.Row][LastCoordinatesOfAttack[0].Coor.Col - 1] == 'n' ||
-                            BoardOfPlayer[LastCoordinatesOfAttack[0].Coor.Row][LastCoordinatesOfAttack[0].Coor.Col - 1] == '!') {
-                            LastCoordinatesOfAttack[0].DirAndValid[1] = false;
-                        }
-                    }
-
-                }
+            
+            if (BoardOfPlayer[AttackingCoordinate.Row][AttackingCoordinate.Col] == '.') {
+                BoardOfPlayer[AttackingCoordinate.Row][AttackingCoordinate.Col] = 'n';
+                cout << "\n Computer misses, your turn again";
+                Turn = 0;
             }
             else {
-                int tempChecker = 0;
-                for (int i = 0; i < 4; i++) {
-                    if (LastCoordinatesOfAttack[0].DirAndValid[i] == false)
-                        tempChecker++;
-                    else {
 
-                    }
-                }
             }
 
 
