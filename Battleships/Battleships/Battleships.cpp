@@ -23,7 +23,7 @@ void Waiting();
 
 struct CoordinateAndDirection {
     Coordinate Coor;
-    map<char, bool> DirAndValid;
+    char DirectionOfAttack;
 };
 
 //ToShootAt goes from 0 to 3
@@ -138,13 +138,38 @@ int main()
                 Turn = 0;
             }
             else {
+                if (LastCoordinatesOfAttack.size() == 0) {
+                    CurrentAttackingMethod.Coor = AttackingCoordinate;
 
+                    BoardOfPlayer[AttackingCoordinate.Row][AttackingCoordinate.Col] = 'X';
+                    if (AttackingCoordinate.Row == 8 && AttackingCoordinate.Col == 8)
+                        CurrentAttackingMethod.DirectionOfAttack = '1';
+                    else if (AttackingCoordinate.Row == 8 && AttackingCoordinate.Col == 0)
+                        CurrentAttackingMethod.DirectionOfAttack = '0';
+                    else if (AttackingCoordinate.Row == 0 && AttackingCoordinate.Col == 8)
+                        CurrentAttackingMethod.DirectionOfAttack = '3';
+                    else
+                        CurrentAttackingMethod.DirectionOfAttack = '2';
+                    
+                }
             }
 
 
 
         }
     }
+}
+
+char DetermineDirOfAttack(Coordinate Initial, Coordinate Final) {
+    if (Final.Row - Initial.Row > 0)
+        return '2';
+    else if (Final.Row - Initial.Row < 0)
+        return '3';
+
+    if (Final.Col - Initial.Col > 0)
+        return '0';
+    else if (Final.Col - Initial.Col < 0)
+        return '1';
 }
 
 void PrintBoard(const vector<vector<char>>& BoardToPrint, const int& PrintFor) {
