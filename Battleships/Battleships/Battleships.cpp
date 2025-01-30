@@ -114,6 +114,7 @@ int main()
             if(!theyHit){
                 Turn = 1;
                 cout << "\n You hit nothing";
+                BoardOfEnemy[AttackingCoordinate.Row][AttackingCoordinate.Col] = 'n';
             }
             PrintBoard(BoardOfEnemy, 1);
         }
@@ -150,14 +151,46 @@ int main()
                         CurrentAttackingMethod.DirectionOfAttack = '3';
                     else
                         CurrentAttackingMethod.DirectionOfAttack = '2';
+
+                    CurrentAttackingMethod.Coor.TrueCoordinate = true;
+                    LastCoordinatesOfAttack[0] = CurrentAttackingMethod;
                     
                 }
             }
-
-
-
         }
     }
+}
+
+//to shoot at next direction
+void ShootAccordingToDirection(char Direction, Coordinate &ReferenceFrom
+    , vector<vector<char>> &BoardToAttack, vector<CoordinateAndDirection> &AnyChangesNeeded) {
+    Coordinate NewAttack;
+    char ChangeOfDir;
+    NewAttack.TrueCoordinate = true;
+    if (Direction == '0') {
+        NewAttack.Row = ReferenceFrom.Row;
+        NewAttack.Col = ReferenceFrom.Col + 1;
+    }
+    else if (Direction == '1') {
+        NewAttack.Row = ReferenceFrom.Row;
+        NewAttack.Col = ReferenceFrom.Col - 1;
+    }
+    else if (Direction == '2') {
+        NewAttack.Row = ReferenceFrom.Row + 1;
+        NewAttack.Col = ReferenceFrom.Col;
+    }
+    else {
+        NewAttack.Row = ReferenceFrom.Row - 1;
+        NewAttack.Col = ReferenceFrom.Col;
+    }
+
+
+    if (BoardToAttack[NewAttack.Row][NewAttack.Col] == '!') {
+        BoardToAttack[NewAttack.Row][NewAttack.Col] = 'X';
+    }
+    else if (BoardToAttack[NewAttack.Row][NewAttack.Col] == 'X')
+        ChangeOfDir = DetermineDirOfAttack(ReferenceFrom, NewAttack);
+
 }
 
 char DetermineDirOfAttack(Coordinate Initial, Coordinate Final) {
