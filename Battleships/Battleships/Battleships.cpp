@@ -10,6 +10,10 @@ using namespace std;
 #define BOARD_DIM  9
 
 
+struct CoordinateAndDirection {
+    Coordinate Coor;
+    char DirectionOfAttack;
+};
 
 void SetUpBoard(vector<vector<char>> &Board, int &ForWho, vector<Coordinate> &OnlyForEnemy);
 Coordinate CoordinatesValid(const string& CheckCoord);
@@ -21,10 +25,6 @@ void Waiting();
 
 
 
-struct CoordinateAndDirection {
-    Coordinate Coor;
-    char DirectionOfAttack;
-};
 
 //ToShootAt goes from 0 to 3
 // 0 = right
@@ -91,6 +91,8 @@ int main()
     AttackingCoordinate.TrueCoordinate = false;
     CoordinateAndDirection CurrentAttackingMethod;
     string UserInput;
+    bool ComputerContinuesFromBefore = false;
+    //If the computer was initially focusing a ship, it must finish it first.
     while (!Finish) {
         while (Turn == 0) {
             PrintBoard(BoardOfPlayer, Turn);
@@ -123,14 +125,16 @@ int main()
 
         while (Turn == 1) {
             cout << "\n Enemy turn to attack... ";
-            do {
-                srand(time(0));
-                AttackingCoordinate.Row = rand() % 9;
-                Waiting();
-                srand(time(0));
-                AttackingCoordinate.Col = rand() % 9;
-            } while (BoardOfPlayer[AttackingCoordinate.Row][AttackingCoordinate.Col] == 'n'
-                || BoardOfPlayer[AttackingCoordinate.Row][AttackingCoordinate.Col] == 'X');
+            if (!ComputerContinuesFromBefore) {
+                do {
+                    srand(time(0));
+                    AttackingCoordinate.Row = rand() % 9;
+                    Waiting();
+                    srand(time(0));
+                    AttackingCoordinate.Col = rand() % 9;
+                } while (BoardOfPlayer[AttackingCoordinate.Row][AttackingCoordinate.Col] == 'n'
+                    || BoardOfPlayer[AttackingCoordinate.Row][AttackingCoordinate.Col] == 'X');
+            }
 
             
             if (BoardOfPlayer[AttackingCoordinate.Row][AttackingCoordinate.Col] == '.') {
@@ -139,71 +143,14 @@ int main()
                 Turn = 0;
             }
             else {
-                if (LastCoordinatesOfAttack.size() == 0) {
-                    CurrentAttackingMethod.Coor = AttackingCoordinate;
 
-                    BoardOfPlayer[AttackingCoordinate.Row][AttackingCoordinate.Col] = 'X';
-                    if (AttackingCoordinate.Row == 8 && AttackingCoordinate.Col == 8)
-                        CurrentAttackingMethod.DirectionOfAttack = '1';
-                    else if (AttackingCoordinate.Row == 8 && AttackingCoordinate.Col == 0)
-                        CurrentAttackingMethod.DirectionOfAttack = '0';
-                    else if (AttackingCoordinate.Row == 0 && AttackingCoordinate.Col == 8)
-                        CurrentAttackingMethod.DirectionOfAttack = '3';
-                    else
-                        CurrentAttackingMethod.DirectionOfAttack = '2';
-
-                    CurrentAttackingMethod.Coor.TrueCoordinate = true;
-                    LastCoordinatesOfAttack[0] = CurrentAttackingMethod;
-                    
-                }
             }
+                
         }
     }
 }
 
-//to shoot at next direction
-void ShootAccordingToDirection(char Direction, Coordinate &ReferenceFrom
-    , vector<vector<char>> &BoardToAttack, vector<CoordinateAndDirection> &AnyChangesNeeded) {
-    Coordinate NewAttack;
-    char ChangeOfDir;
-    NewAttack.TrueCoordinate = true;
-    if (Direction == '0') {
-        NewAttack.Row = ReferenceFrom.Row;
-        NewAttack.Col = ReferenceFrom.Col + 1;
-    }
-    else if (Direction == '1') {
-        NewAttack.Row = ReferenceFrom.Row;
-        NewAttack.Col = ReferenceFrom.Col - 1;
-    }
-    else if (Direction == '2') {
-        NewAttack.Row = ReferenceFrom.Row + 1;
-        NewAttack.Col = ReferenceFrom.Col;
-    }
-    else {
-        NewAttack.Row = ReferenceFrom.Row - 1;
-        NewAttack.Col = ReferenceFrom.Col;
-    }
 
-
-    if (BoardToAttack[NewAttack.Row][NewAttack.Col] == '!') {
-        BoardToAttack[NewAttack.Row][NewAttack.Col] = 'X';
-    }
-    else if (BoardToAttack[NewAttack.Row][NewAttack.Col] == 'X')
-        ChangeOfDir = DetermineDirOfAttack(ReferenceFrom, NewAttack);
-
-}
-
-char DetermineDirOfAttack(Coordinate Initial, Coordinate Final) {
-    if (Final.Row - Initial.Row > 0)
-        return '2';
-    else if (Final.Row - Initial.Row < 0)
-        return '3';
-
-    if (Final.Col - Initial.Col > 0)
-        return '0';
-    else if (Final.Col - Initial.Col < 0)
-        return '1';
-}
 
 void PrintBoard(const vector<vector<char>>& BoardToPrint, const int& PrintFor) {
     if (PrintFor == 0)
