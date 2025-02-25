@@ -25,10 +25,11 @@ void Waiting();
 
 
 enum Direction {
-    left,
-    right,
-    up,
-    down
+    NONE,
+    LEFT,
+    RIGHT,
+    UP,
+    DOWN
 };
 
 
@@ -82,7 +83,7 @@ int main()
     SetUpBoard(BoardOfEnemy, SetUp_PrintFor, EnemyBoatsPosition);
 
 
-    enum Direction CurrentDir = left;
+    enum Direction CurrentDir = NONE;
     int Turn = 0;
     bool Finish = false;
     Coordinate AttackingCoordinate;
@@ -145,7 +146,46 @@ int main()
                 Turn = 0;
             }
             else {
-                
+                if (!ComputerContinuesFromBefore) {
+                    BoardOfPlayer[AttackingCoordinate.Row][AttackingCoordinate.Col] = 'X';
+                    PrevCoordinate.Row = AttackingCoordinate.Row;
+                    PrevCoordinate.Col = AttackingCoordinate.Col;
+                    PrevCoordinate.TrueCoordinate = true;
+                    ComputerContinuesFromBefore = true;
+                }
+                else {
+                    switch (CurrentDir)
+                    {
+                    LEFT:
+                        if(PrevCoordinate.Col < 8)
+                            PrevCoordinate.Col++;
+                        break;
+                    RIGHT:
+                        if(PrevCoordinate.Col > 0)
+                            PrevCoordinate.Col--;
+                        break;
+                    UP:
+                        if(PrevCoordinate.Row < 8)
+                            PrevCoordinate.Row++;
+                        break;
+                    DOWN:
+                        if(PrevCoordinate.Row > 0)
+                            PrevCoordinate.Row--;
+                        break;
+                    default:
+                        if ((AttackingCoordinate.Row - PrevCoordinate.Row == 0) && (AttackingCoordinate.Col - PrevCoordinate.Col == 1))
+                            CurrentDir = LEFT;
+                        if ((AttackingCoordinate.Row - PrevCoordinate.Row == 0) && (AttackingCoordinate.Col - PrevCoordinate.Col == -1))
+                            CurrentDir = RIGHT;
+                        if ((AttackingCoordinate.Row - PrevCoordinate.Row == 1) && (AttackingCoordinate.Col - PrevCoordinate.Col == 0))
+                            CurrentDir = UP;
+                        if ((AttackingCoordinate.Row - PrevCoordinate.Row == -1) && (AttackingCoordinate.Col - PrevCoordinate.Col == 0))
+                            CurrentDir = DOWN;
+                        break;
+                    }
+
+                }
+
             }
                 
         }
