@@ -24,18 +24,14 @@ char GenerateOrien();
 void Waiting();
 
 
+enum Direction {
+    left,
+    right,
+    up,
+    down
+};
 
 
-//ToShootAt goes from 0 to 3
-// 0 = right
-// 1 = left
-// 2 = up
-// 3 = down.
-
-
-//this vector will only contain 2 coordinates at most, the end coordinates of boat.
-//Everytime a new end coordinate is found, it replaces the coordinate in the second position.
-vector<CoordinateAndDirection> LastCoordinatesOfAttack;
 
 
 int main()
@@ -85,9 +81,13 @@ int main()
     SetUp_PrintFor++;
     SetUpBoard(BoardOfEnemy, SetUp_PrintFor, EnemyBoatsPosition);
 
+
+    enum Direction CurrentDir = left;
     int Turn = 0;
     bool Finish = false;
     Coordinate AttackingCoordinate;
+    Coordinate PrevCoordinate;
+    PrevCoordinate.TrueCoordinate = false;
     AttackingCoordinate.TrueCoordinate = false;
     CoordinateAndDirection CurrentAttackingMethod;
     string UserInput;
@@ -134,16 +134,18 @@ int main()
                     AttackingCoordinate.Col = rand() % 9;
                 } while (BoardOfPlayer[AttackingCoordinate.Row][AttackingCoordinate.Col] == 'n'
                     || BoardOfPlayer[AttackingCoordinate.Row][AttackingCoordinate.Col] == 'X');
+             
             }
 
             
             if (BoardOfPlayer[AttackingCoordinate.Row][AttackingCoordinate.Col] == '.') {
                 BoardOfPlayer[AttackingCoordinate.Row][AttackingCoordinate.Col] = 'n';
                 cout << "\n Computer misses, your turn again";
+                ComputerContinuesFromBefore = false;
                 Turn = 0;
             }
             else {
-
+                
             }
                 
         }
